@@ -10,41 +10,29 @@ const client = new Client({
 		GatewayIntentBits.MessageContent,
 		GatewayIntentBits.GuildMembers,
 		GatewayIntentBits.GuildMessageReactions,
-		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.GuildPresences,
 	],
 });
 
-client.cooldowns = new Collection();
 client.commands = new Collection();
-const foldersPath = path.join(__dirname, 'commands');
-const commandFolders = fs.readdirSync(foldersPath);
+client.cooldowns = new Collection();
+client.buttons = new Collection();
+client.selectMenus = new Collection();
+client.commandArray = [];
 
-for (const folder of commandFolders) {
-	const commandsPath = path.join(foldersPath, folder);
-	const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
-	for (const file of commandFiles) {
-		const filePath = path.join(commandsPath, file);
-		const command = require(filePath);
-		if ('data' in command && 'execute' in command) {
-			client.commands.set(command.data.name, command);
-		} else {
-			console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
-		}
+const functionPath = path.join(__dirname, 'functions');
+const functionFolders = fs.readdirSync(functionPath);
+
+for (const folder of functionFolders) {
+	const functionsPath = path.join(functionPath, folder);
+	const functionFiles = fs.readdirSync(functionsPath).filter(file => file.endsWith('.js'));
+	for (const file of functionFiles) {
+		const filePath = path.join(functionsPath, file);
+		require(filePath)(client);
 	}
 }
 
-const eventsPath = path.join(__dirname, 'events');
-const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
-
-for (const file of eventFiles) {
-	const filePath = path.join(eventsPath, file);
-	const event = require(filePath);
-	if (event.once) {
-		client.once(event.name, (...args) => event.execute(...args));
-	} else {
-		client.on(event.name, (...args) => event.execute(...args));
-	}
-}
-
-
+client.handleEvents();
+client.handleCommands();
+client.handleComponents();
 client.login(token);
