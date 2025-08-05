@@ -1,5 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
+const { connection } = require('mongoose');
 
 module.exports = (client) => {
     client.handleEvents = async () => {
@@ -23,7 +24,16 @@ module.exports = (client) => {
                         }
                     }
                     break;
-                case 'events':
+                case 'mongo':
+                    for (const file of eventFiles) {
+                        const filePath = path.join(eventPath, file);
+                        const event = require(filePath);
+                        if (event.once) {
+                            client.once(event.name, (...args) => event.execute(...args, client));
+                        } else {
+                            connection.on(event.name, (...args) => event.execute(...args, client));
+                        }
+                    }
                     break;
                 default:
                     console.warn(`Unknown folder: ${folder}`);
