@@ -8,8 +8,8 @@ module.exports = {
 		console.log(`Ready! Logged in as ${client.user.tag}`);
 		client.user.setPresence({ 
 			activities: [{ 
-				name: ' my enemies burn', 
-				type: ActivityType.Watching, 
+				name: 'the Jonas Brothers', 
+				type: ActivityType.Listening, 
 
 			}], 
 			status: 'dnd' 

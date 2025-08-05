@@ -1,7 +1,8 @@
 const fs = require('node:fs');
 const path = require('node:path');
+const { connect } = require('mongoose');
 const { Client, Collection, Events, GatewayIntentBits, MessageFlags } = require('discord.js');
-const { token } = require('./config.json');
+const { token, databaseToken } = require('./config.json');
 
 const client = new Client({
 	intents: [
@@ -36,3 +37,13 @@ client.handleEvents();
 client.handleCommands();
 client.handleComponents();
 client.login(token);
+
+(async () => {
+	connect(databaseToken)
+		.then(() => {
+			console.log('Connected to the database');
+		})
+		.catch(err => {
+			console.error('Database connection error:', err);
+		});
+})();

@@ -9,10 +9,10 @@ module.exports = {
 
 	async execute(interaction, client) {
 		const message = await interaction.deferReply({
-            fetchReply: true,
+            withResponse: true,
         });
 
-        const newMessage = 'API Latency: ${client.ws.ping}\n Client Ping: ${message.createdTimestamp - interaction.createdTimestamp}ms';
+        const newMessage = `API Latency: ${client.ws.ping}\n Client Ping: ${message.createdTimestamp - interaction.createdTimestamp}ms`;
         interaction.editReply({
             content: newMessage
         });

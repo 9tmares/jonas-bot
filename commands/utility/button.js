@@ -1,11 +1,11 @@
-const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags, ChannelType } = require('discord.js');
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle} = require('discord.js');
 
 module.exports = {
 	cooldown: 5,
 	category: 'utility',
 	data: new SlashCommandBuilder()
 		.setName('button')
-		.setDescription('RReturn a button interaction.'),
+		.setDescription('Return a button interaction.'),
 
 	async execute(interaction, client) {
 		const button = new ButtonBuilder()
@@ -17,7 +17,7 @@ module.exports = {
         const row = new ActionRowBuilder();
         row.addComponents(button);
 
-        await interaction.reply({ rows: [row], content: 'Click the button below to try it out!' });
+        await interaction.reply({ components: [row] });
 
 
     }

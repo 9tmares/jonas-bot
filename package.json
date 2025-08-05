@@ -1,23 +1,25 @@
 {
-  "name": "medea",
+  "name": "jonas",
   "version": "1.0.0",
-  "description": "*A discord bot for personal usage/for fun*",
+  "description": "*A discord bot for for e-19*",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/9tmares/Medea.git"
+    "url": "git+https://github.com/9tmares/jonas-bot.git"
   },
-  "author": "",
+  "author": "Medea ",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/9tmares/Medea/issues"
+    "url": "https://github.com/9tmares/jonas-bot/issues"
   },
-  "homepage": "https://github.com/9tmares/Medea#readme",
+  "homepage": "https://github.com/9tmares/jonas-bot#readme",
   "dependencies": {
     "discord.js": "^14.21.0",
+    "mongodb": "^6.18.0",
+    "mongoose": "^8.17.0",
     "pm2": "^6.0.8"
   }
 }
